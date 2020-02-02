@@ -19,8 +19,8 @@ message="歡迎來到中山大學之道，本官方帳號會自動在當日提�
 @csrf_exempt
 @require_POST
 def webhook(request):
-    signature = request.headers["X-Line-Signature"]
-    body = request.body.decode()
+    signature = request.META['HTTP_X_LINE_SIGNATURE']
+    body = request.body.decode('utf-8')
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
