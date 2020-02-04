@@ -63,3 +63,6 @@ def send_text(event:MessageEvent):
         index+=1
         if(index>=len(Text_list)):
             index=0
+
+def auto_broadcast():
+    line_bot_api.broadcast(TextSendMessage(text='今天沒有大學之道'))

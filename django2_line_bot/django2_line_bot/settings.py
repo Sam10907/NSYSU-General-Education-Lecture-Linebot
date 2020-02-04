@@ -26,7 +26,8 @@ SECRET_KEY = 'impd60(%)de$ad%tw&@-=+4ryg&)508qx#@hnay9v%zb_g+9va'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'd43c9861.ngrok.io'
+    '06be66d4.ngrok.io',
+    '127.0.0.1'
 ]
 
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +125,13 @@ STATIC_URL = '/static/'
 
 CHANNEL_ACCESS_TOKEN = "Ps1DeC+Mswm2Zpd14q3sa/3/I1g5+MiiqiHD8mqPNa8ykCuQ7wJ+tIuJE6qVdf6uNNGge1Fzk+nwmZAc8s/LyMcEQK7wwSKEBIHQCLEo00YyRiwgE1FT8I28s2pc2Qs+mNVMNzBC316oal2zyMhfdgdB04t89/1O/w1cDnyilFU="
 CHANNEL_SECRET = "3882dd8561c35fbbe0d9b4f53912da7b"
+
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default'
+}
