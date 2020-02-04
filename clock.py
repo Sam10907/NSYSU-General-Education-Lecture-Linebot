@@ -1,13 +1,13 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
-from django.conf import settings
 import requests
 import time
 
-line_bot_api=LineBotApi(settings.CHANNEL_ACCESS_TOKEN)
+CHANNEL_ACCESS_TOKEN = "Ps1DeC+Mswm2Zpd14q3sa/3/I1g5+MiiqiHD8mqPNa8ykCuQ7wJ+tIuJE6qVdf6uNNGge1Fzk+nwmZAc8s/LyMcEQK7wwSKEBIHQCLEo00YyRiwgE1FT8I28s2pc2Qs+mNVMNzBC316oal2zyMhfdgdB04t89/1O/w1cDnyilFU="
+line_bot_api=LineBotApi(CHANNEL_ACCESS_TOKEN)
 sched=BlockingScheduler()
-sched.add_job(auto_broadcast,'interval',minutes=2, start_date='2020-2-5 00:05:00')
+sched.add_job(auto_broadcast,'interval',minutes=2, start_date='2020-2-4 16:15:00')
 @sched.scheduled_job('interval', id='auto_id', minutes=2)
 def auto_broadcast():
     line_bot_api.broadcast(TextSendMessage(text='今天沒有大學之道'))
