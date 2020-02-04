@@ -1,3 +1,4 @@
+APScheduler==3.6.3
 arrow==0.15.5
 asgiref==3.2.3
 blessed==1.17.1
@@ -18,6 +19,7 @@ requests==2.22.0
 six==1.14.0
 sqlparse==0.3.0
 static3==0.7.0
+tzlocal==2.0.0
 urllib3==1.25.8
 wcwidth==0.1.8
 psycopg2==2.7.3.2
