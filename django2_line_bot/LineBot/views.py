@@ -17,7 +17,8 @@ handler = WebhookHandler(settings.CHANNEL_SECRET)
 Message="歡迎來到中山大學之道，本官方帳號會自動在當日提醒您今天有大學之道的演講或者是英文自學園的講座，避免您錯過而影響畢業門檻，如要查詢大學之道或英文自學園的講座日期，請在訊息欄輸入「大學之道」或「英文自學園」我們將為您提供資訊。"
 
 Text_list=['嗨~今天過的好嗎?','摳憐納','好棒喔~加油']
-index=0
+
+user_id_dict={}
 
 @csrf_exempt
 @require_POST
@@ -58,8 +59,14 @@ def send_sticker(event:MessageEvent):
 @handler.add(MessageEvent)
 def send_text(event:MessageEvent):
     if event.source.user_id != 'Udeadbeefdeadbeefdeadbeefdeadbeef':
-        global index
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[index]))
-        index+=1
-        if(index>=len(Text_list)):
-            index=0
+        if event.source.user_id in user_id_dict.keys():
+            Key=event.source.user_id 
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
+            user_id_dict[Key]+=1
+            if user_id_dict[Key] >= len(Text_list):
+                user_id_dict[Key]=0
+        else:
+            Key=event.source.user_id
+            user_id_dict[Key]=0
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
+            user_id_dict[Key]+=1
