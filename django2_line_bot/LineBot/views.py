@@ -70,3 +70,4 @@ def send_text(event:MessageEvent):
             user_id_dict[Key]=0
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
             user_id_dict[Key]+=1
+        print(str(user_id_dict))
