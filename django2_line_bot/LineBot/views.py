@@ -69,6 +69,7 @@ def send_text(event:MessageEvent):
             user_id_dict[Key]= user_id_dict[Key]+1
             if user_id_dict[Key] >= len(Text_list):
                 user_id_dict[Key]=0
+            user_id_dict=user_id_dict.copy()
             print(str(user_id_dict))
         else:
             print("else")
@@ -78,4 +79,5 @@ def send_text(event:MessageEvent):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key1]]))
             print("回覆後-------")
             user_id_dict[Key1]=user_id_dict[Key1]+1
+            user_id_dict=user_id_dict.copy()
             print(str(user_id_dict))
