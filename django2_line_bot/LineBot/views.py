@@ -60,14 +60,19 @@ def send_sticker(event:MessageEvent):
 def send_text(event:MessageEvent):
     if event.source.user_id != 'Udeadbeefdeadbeefdeadbeefdeadbeef':
         if event.source.user_id in user_id_dict.keys():
+            print(str(user_id_dict))
             Key=event.source.user_id 
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
+            print("回覆後-------")
             user_id_dict[Key]+=1
             if user_id_dict[Key] >= len(Text_list):
                 user_id_dict[Key]=0
+            print(str(user_id_dict))
         else:
-            Key=event.source.user_id
-            user_id_dict[Key]=0
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
-            user_id_dict[Key]+=1
-        print(str(user_id_dict))
+            Key1=event.source.user_id
+            user_id_dict[Key1]=0
+            print(str(user_id_dict))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key1]]))
+            print("回覆後-------")
+            user_id_dict[Key1]+=1
+            print(str(user_id_dict))
