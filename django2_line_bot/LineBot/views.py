@@ -59,7 +59,7 @@ def send_sticker(event:MessageEvent):
 @handler.add(MessageEvent)
 def send_text(event:MessageEvent):
     if event.source.user_id != 'Udeadbeefdeadbeefdeadbeefdeadbeef':
-        if user_id_dict.has_key(event.source.user_id):
+        if event.source.user_id in user_id_dict.keys():
             print("if")
             print(str(user_id_dict))
             Key=event.source.user_id 
