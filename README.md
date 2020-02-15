@@ -5,4 +5,5 @@
 
 Line api Python SDK -> https://github.com/line/line-bot-sdk-python#message
 
-由於我是使用Line的免費專案，每個月最多只能由bot發500則訊息，如果收不到訊息可能就是這個月的額度用完了，煩請大家盡可能不要一直傳訊息給機器人消耗本月的訊息額度，敬請見諒~
+# heroku restart problem
+由於heroku每隔24小時+random minute會強制休眠，所以有時候早上會收不到訊息，記得定時傳訊息給linebot，以便喚醒linebot的heroku後台程序。
