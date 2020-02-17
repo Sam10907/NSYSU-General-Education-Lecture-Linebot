@@ -8,6 +8,8 @@ from django.http.response import HttpResponse, HttpResponseBadRequest
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent, StickerMessage, StickerSendMessage
+from .models import User_data
+from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger("django")
 
@@ -17,8 +19,6 @@ handler = WebhookHandler(settings.CHANNEL_SECRET)
 Message="歡迎來到中山大學之道，本官方帳號會自動在當日提醒您今天有大學之道的演講或者是英文自學園的講座，避免您錯過而影響畢業門檻，如要查詢大學之道或英文自學園的講座日期，請在訊息欄輸入「大學之道」或「英文自學園」我們將為您提供資訊。"
 
 Text_list=['嗨~今天過的好嗎?','摳憐納','好棒喔~加油']
-
-user_id_dict={}
 
 @csrf_exempt
 @require_POST
@@ -58,26 +58,16 @@ def send_sticker(event:MessageEvent):
         line_bot_api.reply_message(event.reply_token,StickerSendMessage(event.message.package_id,event.message.sticker_id))
 @handler.add(MessageEvent)
 def send_text(event:MessageEvent):
-    global user_id_dict
     if event.source.user_id != 'Udeadbeefdeadbeefdeadbeefdeadbeef':
-        if event.source.user_id in user_id_dict.keys():
-            print("if")
-            print(str(user_id_dict))
-            Key=event.source.user_id 
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key]]))
-            print("回覆後-------")
-            user_id_dict[Key]= user_id_dict[Key]+1
-            if user_id_dict[Key] >= len(Text_list):
-                user_id_dict[Key]=0
-            user_id_dict=user_id_dict.copy()
-            print(str(user_id_dict))
-        else:
-            print("else")
-            Key1=event.source.user_id
-            user_id_dict.setdefault(Key1,0)
-            print(str(user_id_dict))
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user_id_dict[Key1]]))
-            print("回覆後-------")
-            user_id_dict[Key1]=user_id_dict[Key1]+1
-            user_id_dict=user_id_dict.copy()
-            print(str(user_id_dict))
+        try:
+            user=User_data.objects.get(user_id=event.source.user_id)
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user.text_index]))
+            user.text_index+=1
+            if user.text_index > 2:
+                user.text_index=0
+            user.save()
+        except ObjectDoesNotExist:
+            user=User_data.objects.create(user_id=event.source.user_id)
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=Text_list[user.text_index]))
+            user.text_index+=1
+            user.save()
