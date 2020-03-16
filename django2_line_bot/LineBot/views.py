@@ -37,6 +37,7 @@ def webhook(request):
 @handler.add(FollowEvent)
 def followed(event:FollowEvent):
     if event.source.user_id != 'Udeadbeefdeadbeefdeadbeefdeadbeef':
+        User_data.objects.create(user_id=event.source.user_id)
         line_bot_api.push_message(event.source.user_id,TextSendMessage(text=Message))
 @handler.add(MessageEvent,message=TextMessage)
 def send_information(event:MessageEvent):
